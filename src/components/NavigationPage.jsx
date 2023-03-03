@@ -7,17 +7,25 @@ const NavigationPage = () => {
     removeLocalStorageItem(localStorageKeys.IS_LOGGED_IN);
   };
   return (
-    <nav className="navbar navbar-expand-lg  navbar-dark bg-dark ">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/dashboard">
           Selenium App
         </NavLink>
-        <button className="navbar-toggler" type="button">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div
           className="collapse navbar-collapse navbar-div"
-          id="navbarNavAltMarkup"
+          id="navbarSupportedContent"
         >
           <div className="navbar-nav">
             <NavLink className="nav-link" to="/dashboard">
