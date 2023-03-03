@@ -13,9 +13,20 @@
     border-bottom-right-radius: 0.3rem;
   }
 }
-.selenium_logo{
-    width: 50px;
+.selenium_logo {
+  width: 50px;
 }
-.section{
-    background-color: #eee;
+.section {
+  background-color: #eee;
+}
+
+.navbar-div {
+  position: relative;
+}
+.logout-btn {
+  position: absolute;
+  right: 0;
+}
+.logout-btn>.logout-icon {
+  margin-bottom: 2px;
 }
