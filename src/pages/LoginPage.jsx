@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../selenium_logo.png";
 import {
   getLocalStorageItem,
   localStorageKeys,
   setLocalStorageItem,
 } from "../shared/constants";
+import { contactListData } from "../shared/contactList";
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     userName: "",
@@ -14,6 +15,8 @@ const LoginPage = () => {
     errorMessage: "",
   });
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/about";
   const { userName, password, errorMessage } = formData;
 
   const handleChange = ({ target: { name, value } }) => {
@@ -26,10 +29,19 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userName === "admin" && password === "admin123") {
+    if (
+      (userName === "admin" && password === "admin123") ||
+      (userName === "user" && password === "user123")
+    ) {
       setFormData({ ...formData, isLoggedIn: true, errorMessage: "" });
-      setLocalStorageItem(localStorageKeys.IS_LOGGED_IN, true);
-      navigate("/about");
+      setLocalStorageItem(localStorageKeys.IS_LOGGED_IN, {
+        isLoggedIn: true,
+        role: userName === "admin" ? ["admin", "user"] : ["user"],
+      });
+      const contactList =
+        getLocalStorageItem(localStorageKeys.CONTACT_LIST) || contactListData;
+      setLocalStorageItem(localStorageKeys.CONTACT_LIST, contactList);
+      navigate(from, { replace: true });
     } else {
       setFormData({
         ...formData,
@@ -40,7 +52,7 @@ const LoginPage = () => {
   };
   useEffect(() => {
     const loggedIn = getLocalStorageItem(localStorageKeys.IS_LOGGED_IN);
-    if (loggedIn) {
+    if (loggedIn?.isLoggedIn) {
       navigate("/about");
     }
   }, [navigate]);

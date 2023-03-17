@@ -1,8 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { localStorageKeys, removeLocalStorageItem } from "../shared/constants";
+import {
+  getLocalStorageItem,
+  localStorageKeys,
+  removeLocalStorageItem,
+} from "../shared/constants";
 const NavigationPage = () => {
+  const loggedInUser = getLocalStorageItem(localStorageKeys.IS_LOGGED_IN);
   const handleLogOut = () => {
     removeLocalStorageItem(localStorageKeys.IS_LOGGED_IN);
   };
@@ -34,9 +39,14 @@ const NavigationPage = () => {
             <NavLink className="nav-link" to="/about">
               About
             </NavLink>
-            <NavLink className="nav-link" to="/contact">
+            {loggedInUser?.role.includes("admin") && (
+              <NavLink className="nav-link" to="/contact">
               Contact
-            </NavLink>
+              </NavLink>
+              )}
+              <NavLink className="nav-link" to="/test-cases">
+                Test-Cases
+              </NavLink>
             <NavLink
               to="/login"
               className="nav-link logout-btn"

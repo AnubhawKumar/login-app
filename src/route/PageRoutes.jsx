@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import LoginPage from "../pages/LoginPage";
+import NotFound from "../pages/NotFound";
 import { routes } from "./routes";
 
 const PageRoutes = () => {
@@ -10,9 +11,13 @@ const PageRoutes = () => {
     <Routes>
       <Route path={"/login"} element={<LoginPage />} />;
       {routes.map((route) => {
-        const { key, path, Component } = route;
+        const { key, path, Component, role } = route;
         return (
-          <Route key={key} path={path} element={<ProtectedRoutes />}>
+          <Route
+            key={key}
+            path={path}
+            element={<ProtectedRoutes allowedRoles={role} />}
+          >
             <Route
               path={path}
               element={
