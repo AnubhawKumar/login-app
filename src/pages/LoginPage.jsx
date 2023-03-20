@@ -125,15 +125,15 @@ const LoginPage = () => {
                 </div>
                 <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                   <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                    <h4 className="mb-4">Let's see the magic of react!!</h4>
+                    <h4 className="mb-3 text-center text-uppercase">Selenium</h4>
                     <p className="small mb-0">
-                      React is an open-source JavaScript library created by
-                      Facebook for building user interfaces (UIs) or UI
-                      components. It is used to develop single-page applications
-                      (SPAs), mobile applications, and complex web applications.
-                      React also provides a Virtual DOM (Document Object Model)
-                      that updates the actual DOM efficiently, making the UI
-                      updates fast and seamless.
+                      Selenium is a powerful tool for controlling web browsers
+                      through programs and performing browser automation. It is
+                      functional for all browsers, works on all major OS and its
+                      scripts are written in various languages i.e Python, Java,
+                      C#, etc, we will be working with Python. Selenium Tutorial
+                      covers all topics such as - WebDriver, WebElement, Unit
+                      Testing with selenium.
                     </p>
                   </div>
                 </div>
