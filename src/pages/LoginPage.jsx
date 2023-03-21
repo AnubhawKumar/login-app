@@ -39,7 +39,7 @@ const LoginPage = () => {
       const contactList =
         getLocalStorageItem(localStorageKeys.CONTACT_LIST) || contactListData;
       setLocalStorageItem(localStorageKeys.CONTACT_LIST, contactList);
-      navigate("/about");
+      navigate("/dashboard");
     } else {
       setFormData({
         ...formData,
@@ -51,7 +51,7 @@ const LoginPage = () => {
   useEffect(() => {
     const loggedIn = getLocalStorageItem(localStorageKeys.IS_LOGGED_IN);
     if (loggedIn?.isLoggedIn) {
-      navigate("/about");
+      navigate("/dashboard");
     }
   }, [navigate]);
 
