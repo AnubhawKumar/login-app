@@ -47,6 +47,9 @@ const NavigationPage = () => {
               <NavLink className="nav-link" to="/test-cases">
                 Test-Cases
               </NavLink>
+              <NavLink className="nav-link" to="/task">
+                Tasks
+              </NavLink>
             <NavLink
               to="/login"
               className="nav-link logout-btn"

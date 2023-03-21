@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import LoginPage from "../pages/LoginPage";
-import NotFound from "../pages/NotFound";
 import { routes } from "./routes";
 
 const PageRoutes = () => {

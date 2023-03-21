@@ -2,6 +2,7 @@ import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
 import HomePage from "../pages/HomePage";
 import NotFound from "../pages/NotFound";
+import TaskPage from "../pages/TaskPage";
 import TestCases from "../pages/TestCases";
 export const routes = [
   {
@@ -26,6 +27,12 @@ export const routes = [
     key:'testCases',
     path: "/test-cases",
     Component: TestCases,
+    role:["admin","user"]
+  },
+  {
+    key:'task',
+    path: "/task",
+    Component: TaskPage,
     role:["admin","user"]
   },
   {
