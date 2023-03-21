@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../selenium_logo.png";
 import {
   getLocalStorageItem,
@@ -15,8 +15,6 @@ const LoginPage = () => {
     errorMessage: "",
   });
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/about";
   const { userName, password, errorMessage } = formData;
 
   const handleChange = ({ target: { name, value } }) => {
@@ -41,7 +39,7 @@ const LoginPage = () => {
       const contactList =
         getLocalStorageItem(localStorageKeys.CONTACT_LIST) || contactListData;
       setLocalStorageItem(localStorageKeys.CONTACT_LIST, contactList);
-      navigate(from, { replace: true });
+      navigate("/about");
     } else {
       setFormData({
         ...formData,
@@ -125,7 +123,9 @@ const LoginPage = () => {
                 </div>
                 <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                   <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                    <h4 className="mb-3 text-center text-uppercase">Selenium</h4>
+                    <h4 className="mb-3 text-center text-uppercase">
+                      Selenium
+                    </h4>
                     <p className="small mb-0">
                       Selenium is a powerful tool for controlling web browsers
                       through programs and performing browser automation. It is

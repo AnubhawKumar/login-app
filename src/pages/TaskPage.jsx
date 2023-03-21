@@ -1,50 +1,62 @@
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import TasksList from "../components/TasksList";
-import { getLocalStorageItem, setLocalStorageItem } from "../shared/constants";
+import {
+  getLocalStorageItem,
+  localStorageKeys,
+  setLocalStorageItem,
+} from "../shared/constants";
+import Loader from "../components/Loader";
+import {
+  completedItem,
+  deleteItem,
+  findItemAndUpdateInList,
+  getAlertMessage,
+} from "../shared/helper";
 
 const TaskPage = () => {
-  const initialTasks = getLocalStorageItem("tasks") || [];
+  const initialTasks = getLocalStorageItem(localStorageKeys.TASK_LIST) || [];
   const [tasks, setTasks] = useState(initialTasks);
   const [task, setTask] = useState("");
   const [editTask, setEditTask] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const timer = useRef();
 
   const updateTask = (taskItem) => {
-    const updatedTask = Array.from(tasks).map((item) => {
-      if (item.id === taskItem.id) {
-        return { ...item, task: task };
-      }
-      return item;
-    });
+    const updatedTask = findItemAndUpdateInList(tasks, task, taskItem);
     setTasks(updatedTask);
   };
 
   const showDelayedAddTask = (task, delay) => {
+    const storedtaskList =
+      getLocalStorageItem(localStorageKeys.TASK_LIST) || [];
+    setLocalStorageItem(localStorageKeys.TASK_LIST, [
+      ...storedtaskList,
+      { task, id: uuid(), completed: false },
+    ]);
     timer.current = setInterval(() => {
       setTasks((prevTask) => [
         ...prevTask,
         { task, id: uuid(), completed: false },
       ]);
+      setLoading(false);
     }, delay);
   };
 
   const handleAddTask = (e) => {
     e.preventDefault();
     if (task.trim() === "") {
-      const message = !editTask
-        ? "Please add the task! Task can't be empty"
-        : `Task can't be empty! you are editting ${editTask.task}`;
+      const message = getAlertMessage(editTask);
       alert(message);
       return;
     }
     if (editTask) {
       updateTask(editTask);
     } else {
+      setLoading(true);
       showDelayedAddTask(task, 5000);
     }
-
     setTask("");
     setEditTask(null);
   };
@@ -54,23 +66,22 @@ const TaskPage = () => {
     setTask(taskItem.task);
   };
   const completeTask = (taskItemId) => {
-    const completedTaskList = Array.from(tasks).map((task) => {
-      if (task.id === taskItemId) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
+    const completedTaskList = completedItem(tasks, taskItemId);
     setTasks(completedTaskList);
   };
   const deleteTask = (taskId) => {
-    const filteredtask = Array.from(tasks).filter(
-      (taskItem) => taskItem.id !== taskId
-    );
+    const filteredtask = deleteItem(tasks, taskId);
     setTasks(filteredtask);
   };
 
   useEffect(() => {
-    setLocalStorageItem("tasks", tasks);
+    if (tasks.length === 0) {
+      setTask("Fill today's time sheet");
+    }
+  }, []);
+
+  useEffect(() => {
+    setLocalStorageItem(localStorageKeys.TASK_LIST, tasks);
     return () => {
       clearInterval(timer.current);
     };
@@ -118,17 +129,21 @@ const TaskPage = () => {
               {editTask ? "Save" : "Add"}
             </button>
           </div>
-          <div className="" id="mx-2 border border-5">
-            {tasks.map((tasItem) => (
-              <TasksList
-                key={tasItem.id}
-                task={tasItem}
-                editask={editask}
-                completeTask={completeTask}
-                deleteTask={deleteTask}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="" id="mx-2 border border-5">
+              {tasks.map((tasItem) => (
+                <TasksList
+                  key={tasItem.id}
+                  task={tasItem}
+                  editask={editask}
+                  completeTask={completeTask}
+                  deleteTask={deleteTask}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

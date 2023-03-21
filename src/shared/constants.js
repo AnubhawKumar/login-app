@@ -1,6 +1,7 @@
 const localStorageKeys = {
   IS_LOGGED_IN: "IS_LOGGED_IN",
   CONTACT_LIST: "CONTACT_LIST",
+  TASK_LIST:"TASK_LIST"
 };
 
 const getLocalStorageItem = (key) => {

@@ -36,20 +36,20 @@ const NavigationPage = () => {
             <NavLink className="nav-link" to="/dashboard">
               Home
             </NavLink>
-            <NavLink className="nav-link" to="/about">
-              About
+            <NavLink className="nav-link" to="/task">
+              Tasks
             </NavLink>
             {loggedInUser?.role.includes("admin") && (
               <NavLink className="nav-link" to="/contact">
-              Contact
+                Contact
               </NavLink>
-              )}
-              <NavLink className="nav-link" to="/test-cases">
-                Test-Cases
-              </NavLink>
-              <NavLink className="nav-link" to="/task">
-                Tasks
-              </NavLink>
+            )}
+            <NavLink className="nav-link" to="/test-cases">
+              Test-Cases
+            </NavLink>
+            <NavLink className="nav-link" to="/about">
+              About
+            </NavLink>
             <NavLink
               to="/login"
               className="nav-link logout-btn"
